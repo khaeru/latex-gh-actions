@@ -1,0 +1,24 @@
+name: basic
+
+on: [push, pull_request]
+
+jobs:
+  compile:
+    runs-on: ubuntu-20.04
+
+    steps:
+    - name: Check out source
+      uses: actions/checkout@v2
+
+    - name: Install tinytex
+      uses: r-lib/actions/setup-tinytex@v1
+
+    - name: Compile
+      working-directory: demo
+      run: latex main.tex
+
+    - name: Upload artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: document
+        path: demo/main.dvi

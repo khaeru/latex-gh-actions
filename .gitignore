@@ -1,0 +1,6 @@
+# TeX intermediate files
+*.aux
+*.log
+
+# Compiled files
+*.dvi
