@@ -1,17 +1,15 @@
-name: basic
+name: docker
 
 on: [push, pull_request]
 
 jobs:
   compile:
     runs-on: ubuntu-20.04
+    container: mirisbowring/texlive_ctan_basic:2019
 
     steps:
     - name: Check out source
       uses: actions/checkout@v2
-
-    - name: Install tinytex
-      uses: r-lib/actions/setup-tinytex@v1
 
     - name: Compile
       working-directory: demo
