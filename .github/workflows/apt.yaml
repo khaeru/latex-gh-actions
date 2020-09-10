@@ -4,21 +4,29 @@ on: [push, pull_request]
 
 jobs:
   compile:
+    strategy:
+      matrix:
+        package:
+        - texlive-latex-base
+        - texlive-full
+
     runs-on: ubuntu-20.04
+    name: apt ${{ matrix.package }}
 
     steps:
     - name: Check out source
       uses: actions/checkout@v2
 
     - name: Install TeXLive using apt
-      run: sudo apt-get install --assume-yes texlive-latex-base
+      run: sudo apt-get install --assume-yes latexmk ${{ matrix.package }}
 
     - name: Compile
       working-directory: demo
-      run: latex main.tex
+      # run: pdflatex main.tex
+      run: latexmk -pdf main.tex
 
     - name: Upload artifact
       uses: actions/upload-artifact@v2
       with:
         name: document
-        path: demo/main.dvi
+        path: demo/main.pdf
